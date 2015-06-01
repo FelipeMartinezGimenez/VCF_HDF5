@@ -3,6 +3,8 @@ import h5py
 import allel
 import numpy as np
 
+#For create the graphic
+from draw_pca import draw_pca
 
 def open_HDF5(filename):
     h5_file = h5py.File(filename, 'r')
@@ -142,6 +144,6 @@ def main(filename=None, filters=None, max_freq=1):
 
 if __name__=='__main__':
 
-    main()    
-    
+    proj = main()    
+    draw_pca(proj)
 
