@@ -95,6 +95,27 @@ def filter_(genotype_array, filters=True, num_al_snp=None, max_missing=0, min_ca
     return g_filt
     
 
+
+
+
+def obtain_pca_points(pca):
+    '''Obtain axes X, Y, Z like the first, second and third components'''
+      
+    X = []
+    Y = []
+    Z = []
+    valores=pca[0] #pca[0] are point data, pca[1] is the object
+    for i in range(len(valores)):          
+        X.append(pca[0][i][0])
+        Y.append(pca[0][i][1])
+        Z.append(pca[0][i][2])
+        #i is the sample number
+        #The third number is the component
+           
+    
+    return X, Y, Z
+
+
 def main(filename=None, filters=None, max_freq=1):
     
     
@@ -105,7 +126,7 @@ def main(filename=None, filters=None, max_freq=1):
     g_filt = filter_(genotype_array, filters=2, num_al_snp=num_al_snp, max_missing=500)
     gn = g_filt.to_n_alt()
     gn = filter_gn(gn, num_al_snp)
-
+    
     #Deleting the variables with genotypes that we don't need, increases speed and
     #the max number of snp that can calculate the pca function
 
@@ -114,11 +135,13 @@ def main(filename=None, filters=None, max_freq=1):
     
     pca = allel.stats.decomposition.pca(gn) 
     
-    return (pca)
+    X, Y, Z = obtain_pca_points(pca)
 
+    return X, Y, Z
 
 
 if __name__=='__main__':
-    main()
 
+    main()    
+    
 
